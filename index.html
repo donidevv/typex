@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypeX - Speed. Precision. Power.</title>
+  <meta name="description" content="TypeX is a fast, accurate typing test designed for speed and focus. Test your typing WPM, accuracy, and compete with yourself.">
+  <meta name="keywords" content="TypeX, typing test, type faster, WPM, typing app">
+  <meta name="robots" content="index, follow">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #58a6ff;
+    }
+    #quote {
+      font-size: 1.5rem;
+      margin: 1rem 0;
+    }
+    #input {
+      font-size: 1.5rem;
+      padding: 0.5rem;
+      width: 90%;
+      max-width: 600px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+    }
+    .stats {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>TypeX</h1>
+  <p id="quote">The quick brown fox jumps over the lazy dog</p>
+  <input type="text" id="input" placeholder="Start typing..." autocomplete="off" />
+  <div class="stats">
+    <p>WPM: <span id="wpm">0</span></p>
+    <p>Accuracy: <span id="accuracy">100</span>%</p>
+  </div>
+
+  <script>
+    const quote = document.getElementById("quote").innerText;
+    const input = document.getElementById("input");
+    const wpmDisplay = document.getElementById("wpm");
+    const accDisplay = document.getElementById("accuracy");
+
+    let startTime, timerStarted = false;
+
+    input.addEventListener("input", () => {
+      if (!timerStarted) {
+        startTime = new Date();
+        timerStarted = true;
+      }
+
+      const typed = input.value;
+      let correct = 0;
+      for (let i = 0; i < typed.length; i++) {
+        if (typed[i] === quote[i]) correct++;
+      }
+
+      const timeElapsed = (new Date() - startTime) / 1000 / 60; // minutes
+      const wpm = Math.round((typed.length / 5) / timeElapsed);
+      const accuracy = Math.round((correct / typed.length) * 100);
+
+      wpmDisplay.textContent = isNaN(wpm) ? 0 : wpm;
+      accDisplay.textContent = isNaN(accuracy) ? 100 : accuracy;
+    });
+  </script>
+</body>
+</html>
